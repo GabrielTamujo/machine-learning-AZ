@@ -12,16 +12,16 @@ Dentre as variáveis consideradas nos algoritmos de Machine Learning, existem do
 
 ## Variáveis Numéricas
 As variáveis numéricas, logicamente, englobam os tipos de variáveis com valor numérico. Esse tipo se divide em dois sub-grupos:
-- Contínua: Engloba o conjunto de números reais que podem representar valores em dinheiro, temperatura, altura, peso ou qualquer dimensão.
-- Discreta: Engloba, geralmente, o conjunto de números finitos inteiros que representam uma categoria ou um grupo.
+- Contínua: engloba o conjunto de números reais que podem representar valores em dinheiro, temperatura, altura, peso ou qualquer dimensão.
+- Discreta: engloba, geralmente, o conjunto de números finitos inteiros que representam uma categoria ou um grupo.
 
 ## Variáveis Categóricas
 As variváveis categóricas englobam as variváveis do tipo String. Elas se duvidem em dois sub-grupos:
-- Nominal: Engloba categorias não mensuráveis, ou seja, que não possui uma lógica ordinal. Ex.: cores, gênero, etc.
-- Ordinal: Engloba categorias que possuem uma lógica de ordenação. Ex.: Tamanho P, M e G. 
+- Nominal: engloba categorias não mensuráveis, ou seja, que não possui uma lógica ordinal. Ex.: cores, gênero, etc.
+- Ordinal: engloba categorias que possuem uma lógica de ordenação. Ex.: Tamanho P, M e G. 
 
 # Base de Dados de Crédito | credit-data.csv
-Um caso bastante frequente onde aplica-se algoritmos de Machine Learning consiste em análise bancária de crédito. Ou seja, a partir de uma série de parâmetros, tomar a decisão de se o empréstimo será liberado ou não para determinada pessoa. Este é o primeiro case que será trabalhado.
+Um caso bastante frequente onde aplica-se algoritmos de Machine Learning consiste em análise bancária de crédito. Ou seja, a partir de uma série de parâmetros, tomar a decisão de se o empréstimo será liberado ou não para determinada pessoa. Este é o primeiro caso que será trabalhado.
 
 ``` 
 clientid,income,age,loan,default
@@ -100,9 +100,9 @@ previsores[:, 0:3] = imputer.transform(previsores[:, 0:3])
 ## Escalonamento dos valores
 Ao visualizarmos e comparamos os valores dos atributos que representam a renda e a idade, notaremos uma grande diferença de escala: os valores de renda são muito maiores que os valores para a idade. Isto tende a se tornar um problema, caso não tratado, principalmente para algoritmos baseados em [Distância Euclidiana](https://pt.wikipedia.org/wiki/Dist%C3%A2ncia_euclidiana), tal como o [KNN](https://medium.com/brasil-ai/knn-k-nearest-neighbors-1-e140c82e9c4e), uma vez que os atributos de maior valor podem ser considerados erroneamente mais importantes.
 
-Para este tipo de problema, geralmente, recomenda-se trabalhar com o Escalonamento por Padronização (Standardisation), que define os valores através da formula abaixo:
+Para este tipo de problema, geralmente, recomenda-se trabalhar com o Escalonamento por Padronização (Standardisation), que define os valores através da fórmula abaixo:
 
-![Standardisation](https://user-images.githubusercontent.com/30511610/82810590-39fd2b80-9e65-11ea-9910-cfbe489123e2.png)
+![Standardisation](https://user-images.githubusercontent.com/30511610/82811473-3d91b200-9e67-11ea-808b-c47d54c1072d.png)
 
 Execute a célula abaixo para aplicar o escalonamento nos previsores:
 
