@@ -102,7 +102,9 @@ Ao visualizarmos e comparamos os valores dos atributos que representam a renda e
 
 Para este tipo de problema, geralmente, recomenda-se trabalhar com o Escalonamento por Padronização (Standardisation), que define os valores através da fórmula abaixo:
 
-![Standardisation](https://user-images.githubusercontent.com/30511610/82903664-a5afc900-9f37-11ea-86be-8b5527529a5b.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/30511610/82903664-a5afc900-9f37-11ea-86be-8b5527529a5b.png">
+</p>
 
 Execute a célula abaixo para aplicar o escalonamento nos previsores:
 
@@ -157,7 +159,9 @@ Ao verificar as condições dos dados, utilizando abordagens simples como `base.
 
 Para se trabalhar com Machine Learning em bases como essa, é necessário criar referências numéricas para as variáveis categóricas, uma vez que textos não significam nada para um computador. Porém, é importante nesta etapa possuir pleno domínio sob a diferenciação entre variáveis categóricas nominais e ordinais para definir esta transformação. Se nós simplesmente definirmos uma sequência de números para cada variável nominal, ou seja, uma variável que não possui semântica atrelada a uma ordem entre categorias, o algoritmo pode acabar considerando errôneamente as sequências numéricas mais altas como as mais importantes. Dessa forma, é preciso criar variáveis do tipo Dummy. Isto é, cada categoria de uma determinada verívavel nominal deverá se tornar uma nova coluna da tabela, atribuindo valores de 0 ou 1 para ativar ou não esta categoria em um determinado registro. 
 
-![dummy](https://user-images.githubusercontent.com/30511610/82900220-924e2f00-9f32-11ea-997a-edd7f633c6a8.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/30511610/82900220-924e2f00-9f32-11ea-997a-edd7f633c6a8.png">
+</p>
 
 O primeiro passo para tal consiste em, novamente, dividr o dataset em previsores e classe:
 
