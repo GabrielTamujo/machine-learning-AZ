@@ -102,7 +102,7 @@ Ao visualizarmos e comparamos os valores dos atributos que representam a renda e
 
 Para este tipo de problema, geralmente, recomenda-se trabalhar com o Escalonamento por Padronização (Standardisation), que define os valores através da fórmula abaixo:
 
-![Standardisation](https://user-images.githubusercontent.com/30511610/82811473-3d91b200-9e67-11ea-808b-c47d54c1072d.png)
+![Standardisation](https://user-images.githubusercontent.com/30511610/82903664-a5afc900-9f37-11ea-86be-8b5527529a5b.png)
 
 Execute a célula abaixo para aplicar o escalonamento nos previsores:
 
@@ -110,6 +110,16 @@ Execute a célula abaixo para aplicar o escalonamento nos previsores:
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 previsores = scaler.fit_transform(previsores)
+```
+
+## Divisão da Base de Dados em Treino e Teste
+Ao finalizar o pré-processamento de dados, é necessário separar os registros entre treinamento e teste para a aplicação dos algoritmos.
+
+Execute:
+
+```
+from sklearn.model_selection import train_test_split
+previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.25, random_state=0)
 ```
 
 Com isso, finalizamos o pré-processamento da base de dados de crédito. 
@@ -128,7 +138,7 @@ Esta base possui 15 colunas descritas abaixo:
 - age: variavél numérica contínua.
 - workclass: variável categórica nominal, podendo ser do tipo Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked.
 - fnlwgt: variavél numérica contínua.
-- education: variável categórica ordinal, podendo ser do tipo Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
+- education: variável categórica nominal, podendo ser do tipo Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool.
 - education-num: variavél numérica discreta.
 - marital-status: variável categórica nominal, podendo ser do tipo Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse.
 - occupation: variável categórica nominal, podendo ser do tipo Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces.
@@ -140,4 +150,65 @@ Esta base possui 15 colunas descritas abaixo:
 - hours-per-week: variavél numérica discreta.
 - native-country: variável categórica nominal, podendo ser do tipo United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands.
 - income: varivável categórica ordinal
+
+Ao verificar as condições dos dados, utilizando abordagens simples como `base.describe()` e `ps.isnull()`, perceberemos que este dataset não necessita correções quanto a valores faltantes ou inconsistentes. 
+
+## Transformação de Varíaveis Categóricas em Variáveis Numéricas
+
+Para se trabalhar com Machine Learning em bases como essa, é necessário criar referências numéricas para as variáveis categóricas, uma vez que textos não significam nada para um computador. Porém, é importante nesta etapa possuir pleno domínio sob a diferenciação entre variáveis categóricas nominais e ordinais para definir esta transformação. Se nós simplesmente definirmos uma sequência de números para cada variável nominal, ou seja, uma variável que não possui semântica atrelada a uma ordem entre categorias, o algoritmo pode acabar considerando errôneamente as sequências numéricas mais altas como as mais importantes. Dessa forma, é preciso criar variáveis do tipo Dummy. Isto é, cada categoria de uma determinada verívavel nominal deverá se tornar uma nova coluna da tabela, atribuindo valores de 0 ou 1 para ativar ou não esta categoria em um determinado registro. 
+
+![dummy](https://user-images.githubusercontent.com/30511610/82900220-924e2f00-9f32-11ea-997a-edd7f633c6a8.png)
+
+O primeiro passo para tal consiste em, novamente, dividr o dataset em previsores e classe:
+
+```
+import pandas as pd
+base = pd.read_csv('census.csv')
+
+previsores = base.iloc[:, 0:14].values
+classe = base.iloc[:, 14].values
+```
+
+As classes que o [Scikit-Learn](https://scikit-learn.org/stable/) oferece para trabalhar com este tipo de conversão são a `LabelEncoder` e `OneHotEncoder`.
+
+Execute a célula abaixo para a conversão:
+
+```
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+
+column_tranformer = ColumnTransformer([('one_hot_encoder', OneHotEncoder(), [1, 3, 5, 6, 7, 8, 9, 13])],remainder='passthrough')
+previsores = column_tranformer.fit_transform(previsores).toarray()
+```
+
+A coluna classe, uma vez que possui apenas os atributos >50K ou <=50K, deverá tornar-se referências númericas 0 e 1. Para tal, deverá ser utilizado a ferramenta `LabelEncoder()` que, ao passar como atributo o DataFrame classe, codificará as categorias da maneira esperada.
+
+```
+labelencorder_classe = LabelEncoder()
+classe = labelencorder_classe.fit_transform(classe)
+```
+
+## Escalonamento dos valores
+Não diferente da primeira base dados, aqui também se faz necessário o escalonamento dos atributos. Um dúvida frequente é se deve ou não aplicar o escalonamento nas variáveis do tipo Dummy, uma vez que elas apenas indicam a presença do atributo ou não e, se aplicarmos o escalonamento, poderá dificultar a nossa interpretação dos dados. Porém, o que para nós parece não fazer sentido ao visualizar, para os algoritmos costuma ser uma diferença essencial, visto que tende a afetar bastante o resultado final de acertividade. 
+
+Para aplicar o escalonamento em todos os atributos execute:
+
+```
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+previsores = scaler.fit_transform(previsores)
+```
+
+## Divisão da Base de Dados em Treino e Teste
+Ao finalizar o pré-processamento de dados, é necessário separar os registros entre treinamento e teste para a aplicação dos algoritmos.
+
+Execute:
+
+```
+from sklearn.model_selection import train_test_split
+previsores_treinamento, previsores_teste, classe_treinamento, classe_teste = train_test_split(previsores, classe, test_size=0.15, random_state=0)
+```
+
+Com isso, finalizamos o pré-processamento da base de dados do Censo.
+
 
