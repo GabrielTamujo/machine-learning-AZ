@@ -7,6 +7,9 @@ Alguns objetivos frequentes desta etapa:
 - Transformação de variáveis categóricas (Variáveis do tipo String p/ referencia numérica)
 - Divisão do Dataset em Base de Treinamento e Base de Teste
 
+Algumas referências:
+- [Python Machine Learning](http://diggerdnepr.ddns.net/wp-content/uploads/2019/02/python-machine-learning-2nd.pdf) | Chapter 4 - Building Good Training Sets
+
 # Tipos de Variáveis
 Dentre as variáveis consideradas nos algoritmos de Machine Learning, existem dois grupos com sub-grupos anexados. A diferenciação e o conhecimento destas nomenclaturas é essencial para a aplicação das técnicas de aprendizagem de máquina.
 
@@ -88,7 +91,7 @@ classe = base.iloc[:, 4].values
 ```
 Nota-se que a coluna id do cliente fora desconsiderada dentre os atributos previsores, visto que o mesmo não tem relevância na tomada de decisão sobre a liberação de crédito.
 
-O tratamento destes valores ocorre através do pacote `SimpleImputer`. Execute:
+O tratamento destes valores ocorre através do pacote [SimpleImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html). Execute:
 
 ```
 from sklearn.impute import SimpleImputer
@@ -96,6 +99,8 @@ imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
 imputer = imputer.fit(previsores[:, 0:3])
 previsores[:, 0:3] = imputer.transform(previsores[:, 0:3])
 ```
+
+Os dois métodos essenciais da classe [SimpleImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html), como visto, são `fit` e `transform`. O método `fit` é utilizado para aprender os paramêtros da base de treinamento, enquanto o método `transform` utiliza estes mesmos parâmetros para transformar a base.  
 
 ## Escalonamento dos valores
 Ao visualizarmos e comparamos os valores dos atributos que representam a renda e a idade, notaremos uma grande diferença de escala: os valores de renda são muito maiores que os valores para a idade. Isto tende a se tornar um problema, caso não tratado, principalmente para algoritmos baseados em [Distância Euclidiana](https://pt.wikipedia.org/wiki/Dist%C3%A2ncia_euclidiana), tal como o [KNN](https://medium.com/brasil-ai/knn-k-nearest-neighbors-1-e140c82e9c4e), uma vez que os atributos de maior valor podem ser considerados erroneamente mais importantes.
