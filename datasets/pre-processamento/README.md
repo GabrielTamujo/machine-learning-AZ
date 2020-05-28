@@ -91,7 +91,7 @@ classe = base.iloc[:, 4].values
 ```
 Nota-se que a coluna id do cliente fora desconsiderada dentre os atributos previsores, visto que o mesmo não tem relevância na tomada de decisão sobre a liberação de crédito.
 
-O tratamento destes valores ocorre através do pacote [SimpleImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html). Execute:
+O tratamento destes valores ocorre através da classe [SimpleImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html). Execute:
 
 ```
 from sklearn.impute import SimpleImputer
@@ -99,7 +99,6 @@ imputer = SimpleImputer(missing_values=np.nan, strategy='mean')
 imputer = imputer.fit(previsores[:, 0:3])
 previsores[:, 0:3] = imputer.transform(previsores[:, 0:3])
 ```
-
 Os dois métodos essenciais da classe [SimpleImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html), como visto, são `fit` e `transform`. O método `fit` é utilizado para aprender os paramêtros da base de treinamento, enquanto o método `transform` utiliza estes mesmos parâmetros para transformar a base.  
 
 ## Escalonamento dos valores
