@@ -9,6 +9,10 @@ Aplicações clássicas:
 - Filtros de Spam
 - Mineração de emoções
 - Separação de documentos
+- Sistema de Recomendação
+- Multi-class Prediction
 
 Referências complementares:
 - [The Optimality of Naive Bayes](http://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf)
+
+# Teorema de Bayes
