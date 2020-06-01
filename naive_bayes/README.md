@@ -26,13 +26,13 @@ O teorema de Bayes é um corolário da lei da probabilidade total, expresso mate
 # O Algoritmo
 O processo de treinamento do Naive Bayes Classifier nada mais é que a criação de uma grande tabela de probabilidade baseada em dados históricos. Como exemplo, utilizaremos a base dados do risco de crédito, descrita abaixo:
 
-<p align="center" style="max-width:70%;">
+<p align="center" style="width:70%;">
   <img src="https://user-images.githubusercontent.com/30511610/83408990-ee5cfb80-a3e9-11ea-8ad4-10e76839c7f2.png">
 </p>
 
 A tabela de probabilidade objetiva, para cada atributo da tabela, indicar a quantidade de ocorrências em relação ao total de ocorrências em que aquele atributo está associado às classes de risco alto, moderado ou baixo. Vejamos abaixo como fica esta tabela após a etapa de treinamento.
 
-<p align="center" style="max-width:70%;">
+<p align="center" style="width:70%;">
   <img src="https://user-images.githubusercontent.com/30511610/83409147-39770e80-a3ea-11ea-892d-cd15bbd52d81.png">
 </p>
 
@@ -42,13 +42,13 @@ Agora, analisando a relação do atributo história de crédito boa com as class
 ## Predições
 Agora digamos que no banco em questão, um novo cliente deseja solicitar um empréstimo possuindo os seguintes atributos:
 
-<p align="center" style="max-width:70%;">
+<p align="center" style="width:70%;">
   <img src="https://user-images.githubusercontent.com/30511610/83411394-86f57a80-a3ee-11ea-9ab0-f61fa952a359.png">
 </p>
 
 Como calcular a probabilidade do risco de empréstimo para este cliente? A partir da tabela de probabilidade construída na etapa de treinamento é bem simples.
 
-<p align="center" style="max-width:70%;">
+<p align="center" style="width:70%;">
   <img src="https://user-images.githubusercontent.com/30511610/83411887-7eea0a80-a3ef-11ea-8b3d-7fa3dc415e6d.png">
 </p>
 
