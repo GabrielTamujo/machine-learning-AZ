@@ -45,15 +45,19 @@ A correção Laplaciana é um artifício utilizado para tratar a ocorrência de 
 ## Predições
 Agora digamos que no banco em questão, um novo cliente deseja solicitar um empréstimo possuindo os seguintes atributos:
 
+
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/30511610/83411394-86f57a80-a3ee-11ea-9ab0-f61fa952a359.png" width="70%">
+  <img src="https://user-images.githubusercontent.com/30511610/83411394-86f57a80-a3ee-11ea-9ab0-f61fa952a359.png" width="30%">
 </p>
 
+
 Como calcular a probabilidade do risco de empréstimo para este cliente? A partir da tabela de probabilidade construída na etapa de treinamento é bem simples.
+
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/30511610/83411887-7eea0a80-a3ef-11ea-8b3d-7fa3dc415e6d.png" width="70%">
 </p>
+
 
 Na nossa tabela de probabilidade, selecionaremos apenas as colunas referentes aos atributos que o usuário possui para então calcular a probabilidade de cada classe de risco. O cálculo é bem simples:
 
