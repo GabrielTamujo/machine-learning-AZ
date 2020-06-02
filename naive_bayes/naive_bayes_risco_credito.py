@@ -26,4 +26,4 @@ classificador = GaussianNB()
 classificador.fit(previsores, classe)
 
 #Fazendo previsões
-resultado = classificador.predict([[0, 0, 1, 2], [3, 0, 0, 0]])
+previsao = classificador.predict([[0, 0, 1, 2], [3, 0, 0, 0]])

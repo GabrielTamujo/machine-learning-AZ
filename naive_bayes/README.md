@@ -14,6 +14,7 @@ Aplicações clássicas:
 
 Referências complementares:
 - [The Optimality of Naive Bayes](http://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf)
+- [Thoughtful Machine Learning | Cap IV](http://feineigle.com/static/books/2018/thoughtful_machine_learning_python/Thoughtful_Machine_Learning_with_Python_-_A_Test-Driven_Approach.pdf)
 
 # Teorema de Bayes
 O teorema de Bayes é um corolário da lei da probabilidade total, expresso matematicamente na forma da seguinte equação:
@@ -27,7 +28,7 @@ O teorema de Bayes é um corolário da lei da probabilidade total, expresso mate
 O processo de treinamento do Naive Bayes Classifier nada mais é que a criação de uma grande tabela de probabilidade baseada em dados históricos. Como exemplo, utilizaremos a base dados do risco de crédito, descrita abaixo:
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/30511610/83408990-ee5cfb80-a3e9-11ea-8ad4-10e76839c7f2.png" style="width: 70%;">
+  <img src="https://user-images.githubusercontent.com/30511610/83408990-ee5cfb80-a3e9-11ea-8ad4-10e76839c7f2.png" width="60%">
 </p>
 
 A tabela de probabilidade objetiva, para cada atributo da tabela, indicar a quantidade de ocorrências em relação ao total de ocorrências em que aquele atributo está associado às classes de risco alto, moderado ou baixo. Vejamos abaixo como fica esta tabela após a etapa de treinamento.
@@ -38,6 +39,8 @@ A tabela de probabilidade objetiva, para cada atributo da tabela, indicar a quan
 
 Ou seja, analisando primeiramente somente as classes, veremos que 6 de um total de 14 registros do dataset possuem risco de crédito alto, ao passo que apenas 3 registros são considerados de risco moderado e 5 de risco baixo. 
 Agora, analisando a relação do atributo história de crédito boa com as classes, veremos que existe apenas 1 registro em um total de 6 em que este atributo está associado a um risco alto. Ao mesmo tempo que existe apenas 1 registro em 3 associado ao risco de crédito moderado, e 3 registros em 5 ao risco baixo. Dessa forma, a etapa de treinamento do algoritmo analisa sucessivamente a relação da ocorrência de cada atributo em relação as classes, construindo a tabela de probabilidade, a qual servirá como base para a predição de novos registros.
+
+A correção Laplaciana é um artifício utilizado para tratar a ocorrência de valores nulos em nossa tabela de probabilidade. A correção consiste em adicionar um registro a mais para substituir o zero e nãop interferir no cálculo final.
 
 ## Predições
 Agora digamos que no banco em questão, um novo cliente deseja solicitar um empréstimo possuindo os seguintes atributos:
@@ -78,3 +81,48 @@ P(Baixo) = 0,00514/0,0645 * 100 = 79,68%
 
 ```
 
+## Vantagens
+- Rápido
+- Simplicidade de interpretação
+- Trabalha com altas dimensões
+- Boas previsões em bases pequenas
+
+## Desvantagens
+- Combinação de características (atributos independentes) - cada par de características são independentes - nem sempre se aplica no mundo real.
+
+# Naive Bayes com Scikit-Learn
+O Scikit-Learn oferece uma classe específica para aplicação do Naive Bayes. Para gerar a tabela de probabilidade, execute:
+
+```
+from sklearn.naive_bayes import GaussianNB
+classificador = GaussianNB()
+classificador.fit(previsores, classe)
+```
+
+É possível utilizar o método `predict` para realizar previsões, como o utilizado no script em que aplica-se NB na base de risco de crédito:
+
+```
+previsao = classificador.predict([[0, 0, 1, 2], [3, 0, 0, 0]])
+```
+
+A partir da separação do dataset em treinamento e teste, é possível passar a lista previsores_teste para executar a predição e analisar a sua acurácia.
+
+```
+previsoes = classificador.predict(previsores_teste)
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+precisao = accuracy_score(classe_teste, previsoes)
+```
+
+Uma importante análise ocorre através da matriz de confusão, que permite analisar a quantidade de erros e acertos para cada classe.
+
+```
+matriz = confusion_matrix(classe_teste, previsoes)
+```
+Por exemplo, como utilizado no script `naive_bayes_credit_data.py`, ao executar esta linha, você visualizará a seguinte matriz:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/30511610/83521959-5aa53100-a4b6-11ea-88fd-2e0fbf0ae07e.png">
+</p>
+
+É muito importante interpretar estes dados corretamente: o primeiro valor, de 428, mostra o total de vezes em que a classe 0 foi corretamente classificada como 0 nos testes, ao passo de que o número 8, mostra a quantidade de vezes que a classe zero foi classificada como 1 nos testes. O mesmo ocorre para a segunda linha: o número 23 é o total de vezes que a classe 1 foi classificada como 0, tal como o número 41 consiste no total de acertos para a classe 1. Ou seja, somando 428 + 41, teremos um total de 469 acertos. Essa análise permite observar onde mais está ocorrendo erros e tomar medidas a partir disso. 
