@@ -6,7 +6,7 @@ Created on Tue Dec 10 14:00:13 2019
 """
 
 import pandas as pd
-base = pd.read_csv('risco-credito.csv')
+base = pd.read_csv('../datasets/risco-credito.csv')
 
 #Divisão do dataset
 previsores = base.iloc[:, 0:4].values

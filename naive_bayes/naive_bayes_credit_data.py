@@ -8,7 +8,7 @@ Created on Tue Dec 10 15:50:22 2019
 import pandas as pd
 import numpy as np
 
-base = pd.read_csv('credit-data.csv')
+base = pd.read_csv('../datasets/credit-data.csv')
 base.loc[base.age < 0, 'age'] = 40.92
                
 #Dividir dataset

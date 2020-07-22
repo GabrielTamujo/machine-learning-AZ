@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 
-base = pd.read_csv("breast-cancer-wisconsin.csv")
+base = pd.read_csv("../datasets/breast-cancer-wisconsin.csv")
 
 base.drop(index=base.loc[base['1.3'] == '?'].index, inplace=True)
 

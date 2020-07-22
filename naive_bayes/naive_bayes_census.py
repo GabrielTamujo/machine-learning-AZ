@@ -1,6 +1,6 @@
 import pandas as pd
 
-base = pd.read_csv('census.csv')
+base = pd.read_csv('../datasets/census.csv')
 
 previsores = base.iloc[:, 0:14].values
 classe = base.iloc[:, 14].values
